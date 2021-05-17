@@ -592,7 +592,7 @@ public class AnomalyResultTransportAction extends HandledTransportAction<ActionR
         if (ExceptionUtil
             .isException(causeException, ResourceNotFoundException.class, ExceptionUtil.RESOURCE_NOT_FOUND_EXCEPTION_NAME_UNDERSCORE)
             || (causeException instanceof IndexNotFoundException
-                && causeException.getMessage().contains(CommonName.CHECKPOINT_INDEX_NAME))) {
+                && causeException.getMessage().contains(CommonName.LEGACY_OPENDISTRO_CHECKPOINT_INDEX_NAME))) {
             failure.set(new ResourceNotFoundException(adID, causeException.getMessage()));
         } else if (ExceptionUtil.isException(causeException, LimitExceededException.class, LIMIT_EXCEEDED_EXCEPTION_NAME_UNDERSCORE)) {
             failure.set(new LimitExceededException(adID, causeException.getMessage(), false));

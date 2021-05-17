@@ -26,8 +26,8 @@
 
 package org.opensearch.ad;
 
-import static org.opensearch.ad.model.AnomalyDetector.ANOMALY_DETECTORS_INDEX;
-import static org.opensearch.ad.model.AnomalyDetectorJob.ANOMALY_DETECTOR_JOB_INDEX;
+import static org.opensearch.ad.model.AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX;
+import static org.opensearch.ad.model.AnomalyDetectorJob.LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX;
 import static org.opensearch.ad.settings.AnomalyDetectorSettings.CATEGORY_FIELD_LIMIT;
 import static org.opensearch.common.xcontent.XContentParserUtils.ensureExpectedToken;
 
@@ -101,7 +101,7 @@ public class EntityProfileRunner extends AbstractProfileRunner {
             listener.onFailure(new InvalidParameterException(CommonErrorMessages.EMPTY_PROFILES_COLLECT));
             return;
         }
-        GetRequest getDetectorRequest = new GetRequest(ANOMALY_DETECTORS_INDEX, detectorId);
+        GetRequest getDetectorRequest = new GetRequest(LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX, detectorId);
 
         client.get(getDetectorRequest, ActionListener.wrap(getResponse -> {
             if (getResponse != null && getResponse.isExists()) {
@@ -163,7 +163,7 @@ public class EntityProfileRunner extends AbstractProfileRunner {
         EntityProfileResponse entityProfileResponse,
         ActionListener<EntityProfile> listener
     ) {
-        GetRequest getRequest = new GetRequest(ANOMALY_DETECTOR_JOB_INDEX, detectorId);
+        GetRequest getRequest = new GetRequest(LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX, detectorId);
         client.get(getRequest, ActionListener.wrap(getResponse -> {
             if (getResponse != null && getResponse.isExists()) {
                 try (
@@ -368,7 +368,7 @@ public class EntityProfileRunner extends AbstractProfileRunner {
             .trackTotalHits(false)
             .size(0);
 
-        SearchRequest request = new SearchRequest(CommonName.ANOMALY_RESULT_INDEX_ALIAS);
+        SearchRequest request = new SearchRequest(CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS);
         request.source(source);
         return request;
     }

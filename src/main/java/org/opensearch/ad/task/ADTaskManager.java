@@ -293,7 +293,7 @@ public class ADTaskManager {
         Consumer<AnomalyDetector> historicalDetectorConsumer,
         ActionListener<T> listener
     ) {
-        GetRequest getRequest = new GetRequest(AnomalyDetector.ANOMALY_DETECTORS_INDEX).id(detectorId);
+        GetRequest getRequest = new GetRequest(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX).id(detectorId);
         client.get(getRequest, ActionListener.wrap(response -> {
             if (!response.isExists()) {
                 listener.onFailure(new OpenSearchStatusException("AnomalyDetector is not found", RestStatus.NOT_FOUND));
@@ -342,7 +342,7 @@ public class ADTaskManager {
         sourceBuilder.query(query);
         SearchRequest searchRequest = new SearchRequest();
         searchRequest.source(sourceBuilder);
-        searchRequest.indices(CommonName.DETECTION_STATE_INDEX);
+        searchRequest.indices(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX);
 
         client.search(searchRequest, ActionListener.wrap(r -> {
             // https://github.com/opendistro-for-elasticsearch/anomaly-detection/pull/359#discussion_r558653132
@@ -671,7 +671,7 @@ public class ADTaskManager {
 
     private void executeHistoricalDetector(AnomalyDetector detector, User user, ActionListener<AnomalyDetectorJobResponse> listener) {
         UpdateByQueryRequest updateByQueryRequest = new UpdateByQueryRequest();
-        updateByQueryRequest.indices(CommonName.DETECTION_STATE_INDEX);
+        updateByQueryRequest.indices(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX);
         BoolQueryBuilder query = new BoolQueryBuilder();
         query.filter(new TermQueryBuilder(DETECTOR_ID_FIELD, detector.getDetectorId()));
         query.filter(new TermQueryBuilder(IS_LATEST_FIELD, true));
@@ -711,7 +711,7 @@ public class ADTaskManager {
             .user(user)
             .build();
 
-        IndexRequest request = new IndexRequest(CommonName.DETECTION_STATE_INDEX);
+        IndexRequest request = new IndexRequest(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX);
         try (XContentBuilder builder = XContentFactory.jsonBuilder()) {
             request
                 .source(adTask.toXContent(builder, RestHandlerUtils.XCONTENT_WITH_TYPE))
@@ -787,7 +787,7 @@ public class ADTaskManager {
             .from(maxAdTaskDocsPerDetector - 1)
             .trackTotalHits(true)
             .size(1);
-        searchRequest.source(sourceBuilder).indices(CommonName.DETECTION_STATE_INDEX);
+        searchRequest.source(sourceBuilder).indices(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX);
         String detectorId = adTask.getDetectorId();
 
         client.search(searchRequest, ActionListener.wrap(r -> {
@@ -917,7 +917,7 @@ public class ADTaskManager {
      * @param listener action listener
      */
     public void updateADTask(String taskId, Map<String, Object> updatedFields, ActionListener<UpdateResponse> listener) {
-        UpdateRequest updateRequest = new UpdateRequest(CommonName.DETECTION_STATE_INDEX, taskId);
+        UpdateRequest updateRequest = new UpdateRequest(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX, taskId);
         Map<String, Object> updatedContent = new HashMap<>();
         updatedContent.putAll(updatedFields);
         updatedContent.put(LAST_UPDATE_TIME_FIELD, Instant.now().toEpochMilli());
@@ -938,7 +938,7 @@ public class ADTaskManager {
     }
 
     public void deleteADTask(String taskId, ActionListener<DeleteResponse> listener) {
-        DeleteRequest deleteRequest = new DeleteRequest(CommonName.DETECTION_STATE_INDEX, taskId);
+        DeleteRequest deleteRequest = new DeleteRequest(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX, taskId);
         client.delete(deleteRequest, listener);
     }
 
@@ -971,7 +971,7 @@ public class ADTaskManager {
      * @param listener action listener
      */
     public void deleteADTasks(String detectorId, AnomalyDetectorFunction function, ActionListener<DeleteResponse> listener) {
-        DeleteByQueryRequest request = new DeleteByQueryRequest(CommonName.DETECTION_STATE_INDEX);
+        DeleteByQueryRequest request = new DeleteByQueryRequest(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX);
 
         BoolQueryBuilder query = new BoolQueryBuilder();
         query.filter(new TermQueryBuilder(DETECTOR_ID_FIELD, detectorId));

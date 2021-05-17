@@ -129,7 +129,7 @@ public class InitAnomalyDetectionIndicesTests extends AbstractADTest {
         }).when(indicesClient).create(any(), any());
 
         ActionListener<CreateIndexResponse> listener = mock(ActionListener.class);
-        if (index.equals(AnomalyDetector.ANOMALY_DETECTORS_INDEX)) {
+        if (index.equals(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX)) {
             adIndices.initAnomalyDetectorIndexIfAbsent(listener);
         } else {
             adIndices.initDetectionStateIndex(listener);
@@ -151,10 +151,10 @@ public class InitAnomalyDetectionIndicesTests extends AbstractADTest {
         when(clusterState.getRoutingTable()).thenReturn(rb.build());
 
         Metadata.Builder mb = Metadata.builder();
-        mb.put(indexMeta(".opendistro-anomaly-results-history-2020.06.24-000003", 1L, CommonName.ANOMALY_RESULT_INDEX_ALIAS), true);
+        mb.put(indexMeta(".anomaly-results-history-2020.06.24-000003", 1L, CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS), true);
 
         ActionListener<CreateIndexResponse> listener = mock(ActionListener.class);
-        if (index.equals(AnomalyDetector.ANOMALY_DETECTORS_INDEX)) {
+        if (index.equals(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX)) {
             adIndices.initAnomalyDetectorIndexIfAbsent(listener);
         } else {
             adIndices.initAnomalyResultIndexIfAbsent(listener);
@@ -184,13 +184,13 @@ public class InitAnomalyDetectionIndicesTests extends AbstractADTest {
         }).when(indicesClient).create(any(), any());
 
         ActionListener<CreateIndexResponse> listener = mock(ActionListener.class);
-        if (index.equals(AnomalyDetector.ANOMALY_DETECTORS_INDEX)) {
+        if (index.equals(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX)) {
             adIndices.initAnomalyDetectorIndexIfAbsent(listener);
-        } else if (index.equals(CommonName.DETECTION_STATE_INDEX)) {
+        } else if (index.equals(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX)) {
             adIndices.initDetectionStateIndex(listener);
-        } else if (index.equals(CommonName.CHECKPOINT_INDEX_NAME)) {
+        } else if (index.equals(CommonName.LEGACY_OPENDISTRO_CHECKPOINT_INDEX_NAME)) {
             adIndices.initCheckpointIndex(listener);
-        } else if (index.equals(AnomalyDetectorJob.ANOMALY_DETECTOR_JOB_INDEX)) {
+        } else if (index.equals(AnomalyDetectorJob.LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX)) {
             adIndices.initAnomalyDetectorJobIndex(listener);
         } else {
             adIndices.initAnomalyResultIndexIfAbsent(listener);
@@ -203,30 +203,30 @@ public class InitAnomalyDetectionIndicesTests extends AbstractADTest {
     }
 
     public void testNotCreateDetector() throws IOException {
-        fixedPrimaryShardsIndexNoCreationTemplate(AnomalyDetector.ANOMALY_DETECTORS_INDEX, null);
+        fixedPrimaryShardsIndexNoCreationTemplate(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX, null);
     }
 
     public void testNotCreateResult() throws IOException {
-        fixedPrimaryShardsIndexNoCreationTemplate(AnomalyDetector.ANOMALY_DETECTORS_INDEX, null);
+        fixedPrimaryShardsIndexNoCreationTemplate(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX, null);
     }
 
     public void testCreateDetector() throws IOException {
-        fixedPrimaryShardsIndexCreationTemplate(AnomalyDetector.ANOMALY_DETECTORS_INDEX);
+        fixedPrimaryShardsIndexCreationTemplate(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX);
     }
 
     public void testCreateState() throws IOException {
-        fixedPrimaryShardsIndexCreationTemplate(CommonName.DETECTION_STATE_INDEX);
+        fixedPrimaryShardsIndexCreationTemplate(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX);
     }
 
     public void testCreateJob() throws IOException {
-        adaptivePrimaryShardsIndexCreationTemplate(AnomalyDetectorJob.ANOMALY_DETECTOR_JOB_INDEX);
+        adaptivePrimaryShardsIndexCreationTemplate(AnomalyDetectorJob.LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX);
     }
 
     public void testCreateResult() throws IOException {
-        adaptivePrimaryShardsIndexCreationTemplate(CommonName.ANOMALY_RESULT_INDEX_ALIAS);
+        adaptivePrimaryShardsIndexCreationTemplate(CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS);
     }
 
     public void testCreateCheckpoint() throws IOException {
-        adaptivePrimaryShardsIndexCreationTemplate(CommonName.CHECKPOINT_INDEX_NAME);
+        adaptivePrimaryShardsIndexCreationTemplate(CommonName.LEGACY_OPENDISTRO_CHECKPOINT_INDEX_NAME);
     }
 }

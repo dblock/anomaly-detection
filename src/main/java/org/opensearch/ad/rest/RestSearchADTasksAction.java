@@ -47,7 +47,7 @@ public class RestSearchADTasksAction extends AbstractSearchAction<ADTask> {
         super(
             ImmutableList.of(),
             ImmutableList.of(Pair.of(URL_PATH, LEGACY_URL_PATH)),
-            CommonName.DETECTION_STATE_INDEX,
+            CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX,
             ADTask.class,
             SearchADTasksAction.INSTANCE
         );

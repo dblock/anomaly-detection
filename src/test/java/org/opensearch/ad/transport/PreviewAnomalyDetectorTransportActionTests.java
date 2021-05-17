@@ -242,7 +242,7 @@ public class PreviewAnomalyDetectorTransportActionTests extends OpenSearchSingle
         final CountDownLatch inProgressLatch = new CountDownLatch(1);
         PreviewAnomalyDetectorRequest request = new PreviewAnomalyDetectorRequest(null, "1234", Instant.now(), Instant.now());
         Settings indexSettings = Settings.builder().put("index.number_of_shards", 5).put("index.number_of_replicas", 1).build();
-        CreateIndexRequest indexRequest = new CreateIndexRequest(AnomalyDetector.ANOMALY_DETECTORS_INDEX, indexSettings);
+        CreateIndexRequest indexRequest = new CreateIndexRequest(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX, indexSettings);
         client().admin().indices().create(indexRequest).actionGet();
         ActionListener<PreviewAnomalyDetectorResponse> previewResponse = new ActionListener<PreviewAnomalyDetectorResponse>() {
             @Override
@@ -307,11 +307,11 @@ public class PreviewAnomalyDetectorTransportActionTests extends OpenSearchSingle
     public void testPreviewTransportActionWithDetector() throws IOException, InterruptedException {
         final CountDownLatch inProgressLatch = new CountDownLatch(1);
         CreateIndexResponse createResponse = TestHelpers
-            .createIndex(client().admin(), AnomalyDetector.ANOMALY_DETECTORS_INDEX, AnomalyDetectionIndices.getAnomalyDetectorMappings());
+            .createIndex(client().admin(), AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX, AnomalyDetectionIndices.getAnomalyDetectorMappings());
         Assert.assertNotNull(createResponse);
 
         AnomalyDetector detector = TestHelpers.randomAnomalyDetector(ImmutableMap.of("testKey", "testValue"), Instant.now());
-        IndexRequest indexRequest = new IndexRequest(AnomalyDetector.ANOMALY_DETECTORS_INDEX)
+        IndexRequest indexRequest = new IndexRequest(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX)
             .setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE)
             .source(detector.toXContent(XContentFactory.jsonBuilder(), RestHandlerUtils.XCONTENT_WITH_TYPE));
         IndexResponse indexResponse = client().index(indexRequest).actionGet(5_000);

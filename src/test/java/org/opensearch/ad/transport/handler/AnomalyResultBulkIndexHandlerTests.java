@@ -34,7 +34,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.opensearch.ad.constant.CommonName.ANOMALY_RESULT_INDEX_ALIAS;
+import static org.opensearch.ad.constant.CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS;
 
 import java.io.IOException;
 import java.time.Clock;
@@ -108,7 +108,7 @@ public class AnomalyResultBulkIndexHandlerTests extends ADUnitTestCase {
     public void testCreateADResultIndexNotAcknowledged() throws IOException {
         doAnswer(invocation -> {
             ActionListener<CreateIndexResponse> listener = invocation.getArgument(0);
-            listener.onResponse(new CreateIndexResponse(false, false, ANOMALY_RESULT_INDEX_ALIAS));
+            listener.onResponse(new CreateIndexResponse(false, false, LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS));
             return null;
         }).when(anomalyDetectionIndices).initAnomalyResultIndexDirectly(any());
         bulkIndexHandler.bulkIndexAnomalyResult(ImmutableList.of(mock(AnomalyResult.class)), listener);

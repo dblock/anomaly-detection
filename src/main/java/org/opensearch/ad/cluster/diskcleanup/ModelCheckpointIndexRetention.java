@@ -70,7 +70,7 @@ public class ModelCheckpointIndexRetention implements Runnable {
     public void run() {
         indexCleanup
             .deleteDocsByQuery(
-                CommonName.CHECKPOINT_INDEX_NAME,
+                CommonName.LEGACY_OPENDISTRO_CHECKPOINT_INDEX_NAME,
                 QueryBuilders
                     .boolQuery()
                     .filter(
@@ -92,7 +92,7 @@ public class ModelCheckpointIndexRetention implements Runnable {
     private void cleanupBasedOnShardSize(Duration cleanUpTtl) {
         indexCleanup
             .deleteDocsBasedOnShardSize(
-                CommonName.CHECKPOINT_INDEX_NAME,
+                CommonName.LEGACY_OPENDISTRO_CHECKPOINT_INDEX_NAME,
                 MAX_SHARD_SIZE_IN_BYTE,
                 QueryBuilders
                     .boolQuery()

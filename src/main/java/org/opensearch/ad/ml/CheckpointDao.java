@@ -436,7 +436,7 @@ public class CheckpointDao {
         // with exponential back off. If the maximum retry limit is reached, processing
         // halts and all failed requests are returned in the response. Any delete
         // requests that completed successfully still stick, they are not rolled back.
-        DeleteByQueryRequest deleteRequest = new DeleteByQueryRequest(CommonName.CHECKPOINT_INDEX_NAME)
+        DeleteByQueryRequest deleteRequest = new DeleteByQueryRequest(CommonName.LEGACY_OPENDISTRO_CHECKPOINT_INDEX_NAME)
             .setQuery(new MatchQueryBuilder(DETECTOR_ID, detectorID))
             .setIndicesOptions(IndicesOptions.LENIENT_EXPAND_OPEN)
             .setAbortOnVersionConflict(false) // when current delete happens, previous might not finish.

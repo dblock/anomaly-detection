@@ -94,7 +94,7 @@ public class CheckpointDeleteTests extends AbstractADTest {
         checkpointDao = new CheckpointDao(
             client,
             clientUtil,
-            CommonName.CHECKPOINT_INDEX_NAME,
+            CommonName.LEGACY_OPENDISTRO_CHECKPOINT_INDEX_NAME,
             gson,
             rcfSerde,
             HybridThresholdingModel.class,

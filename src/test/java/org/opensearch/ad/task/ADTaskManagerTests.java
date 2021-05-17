@@ -36,7 +36,7 @@ import static org.mockito.Mockito.verify;
 import static org.opensearch.ad.TestHelpers.randomDetector;
 import static org.opensearch.ad.TestHelpers.randomFeature;
 import static org.opensearch.ad.TestHelpers.randomUser;
-import static org.opensearch.ad.constant.CommonName.ANOMALY_RESULT_INDEX_ALIAS;
+import static org.opensearch.ad.constant.CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS;
 import static org.opensearch.ad.settings.AnomalyDetectorSettings.BATCH_TASK_PIECE_INTERVAL_SECONDS;
 import static org.opensearch.ad.settings.AnomalyDetectorSettings.MAX_OLD_AD_TASK_DOCS_PER_DETECTOR;
 import static org.opensearch.ad.settings.AnomalyDetectorSettings.REQUEST_TIMEOUT;
@@ -132,7 +132,7 @@ public class ADTaskManagerTests extends ADUnitTestCase {
     public void testCreateTaskIndexNotAcknowledged() throws IOException {
         doAnswer(invocation -> {
             ActionListener<CreateIndexResponse> listener = invocation.getArgument(0);
-            listener.onResponse(new CreateIndexResponse(false, false, ANOMALY_RESULT_INDEX_ALIAS));
+            listener.onResponse(new CreateIndexResponse(false, false, LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS));
             return null;
         }).when(anomalyDetectionIndices).initDetectionStateIndex(any());
         AnomalyDetector detector = randomDetector(

@@ -109,7 +109,7 @@ public class DetectionStateHandler extends AnomalyIndexHandler<DetectorInternalS
             client,
             settings,
             threadPool,
-            CommonName.DETECTION_STATE_INDEX,
+            CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX,
             createIndex,
             indexExists,
             clientUtil,

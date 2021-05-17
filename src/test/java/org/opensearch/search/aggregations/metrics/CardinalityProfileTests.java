@@ -32,8 +32,8 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.opensearch.ad.model.AnomalyDetector.ANOMALY_DETECTORS_INDEX;
-import static org.opensearch.ad.model.AnomalyDetectorJob.ANOMALY_DETECTOR_JOB_INDEX;
+import static org.opensearch.ad.model.AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX;
+import static org.opensearch.ad.model.AnomalyDetectorJob.LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX;
 
 import java.io.IOException;
 import java.time.temporal.ChronoUnit;
@@ -93,7 +93,7 @@ public class CardinalityProfileTests extends AbstractProfileRunnerTests {
             GetRequest request = (GetRequest) args[0];
             ActionListener<GetResponse> listener = (ActionListener<GetResponse>) args[1];
 
-            if (request.index().equals(ANOMALY_DETECTORS_INDEX)) {
+            if (request.index().equals(LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX)) {
                 switch (detectorStatus) {
                     case EXIST:
                         listener
@@ -105,7 +105,7 @@ public class CardinalityProfileTests extends AbstractProfileRunnerTests {
                         assertTrue("should not reach here", false);
                         break;
                 }
-            } else if (request.index().equals(ANOMALY_DETECTOR_JOB_INDEX)) {
+            } else if (request.index().equals(LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX)) {
                 AnomalyDetectorJob job = null;
                 switch (jobStatus) {
                     case ENABLED:

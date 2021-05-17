@@ -41,27 +41,27 @@ public enum ADIndex {
 
     // throw RuntimeException since we don't know how to handle the case when the mapping reading throws IOException
     RESULT(
-        CommonName.ANOMALY_RESULT_INDEX_ALIAS,
+        CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS,
         true,
         ThrowingSupplierWrapper.throwingSupplierWrapper(AnomalyDetectionIndices::getAnomalyResultMappings)
     ),
     CONFIG(
-        AnomalyDetector.ANOMALY_DETECTORS_INDEX,
+        AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX,
         false,
         ThrowingSupplierWrapper.throwingSupplierWrapper(AnomalyDetectionIndices::getAnomalyDetectorMappings)
     ),
     JOB(
-        AnomalyDetectorJob.ANOMALY_DETECTOR_JOB_INDEX,
+        AnomalyDetectorJob.LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX,
         false,
         ThrowingSupplierWrapper.throwingSupplierWrapper(AnomalyDetectionIndices::getAnomalyDetectorJobMappings)
     ),
     CHECKPOINT(
-        CommonName.CHECKPOINT_INDEX_NAME,
+        CommonName.LEGACY_OPENDISTRO_CHECKPOINT_INDEX_NAME,
         false,
         ThrowingSupplierWrapper.throwingSupplierWrapper(AnomalyDetectionIndices::getCheckpointMappings)
     ),
     STATE(
-        CommonName.DETECTION_STATE_INDEX,
+        CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX,
         false,
         ThrowingSupplierWrapper.throwingSupplierWrapper(AnomalyDetectionIndices::getDetectionStateMappings)
     );

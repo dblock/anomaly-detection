@@ -51,7 +51,7 @@ public class SearchAnomalyResultActionTests extends HistoricalDetectorIntegTestC
 
     @Test
     public void testNoIndex() {
-        deleteIndexIfExists(CommonName.ANOMALY_RESULT_INDEX_ALIAS);
+        deleteIndexIfExists(CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS);
         SearchResponse searchResponse = client().execute(SearchAnomalyResultAction.INSTANCE, matchAllRequest()).actionGet(10000);
         assertEquals(0, searchResponse.getInternalResponse().hits().getTotalHits().value);
     }

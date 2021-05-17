@@ -35,7 +35,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.opensearch.ad.model.AnomalyDetector.ANOMALY_DETECTORS_INDEX;
+import static org.opensearch.ad.model.AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -342,7 +342,7 @@ public class IndexAnomalyDetectorActionHandlerTests extends AbstractADTest {
                     if (action.equals(SearchAction.INSTANCE)) {
                         assertTrue(request instanceof SearchRequest);
                         SearchRequest searchRequest = (SearchRequest) request;
-                        if (searchRequest.indices()[0].equals(ANOMALY_DETECTORS_INDEX)) {
+                        if (searchRequest.indices()[0].equals(LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX)) {
                             listener.onResponse((Response) detectorResponse);
                         } else {
                             listener.onResponse((Response) userIndexResponse);
@@ -412,7 +412,7 @@ public class IndexAnomalyDetectorActionHandlerTests extends AbstractADTest {
         when(detectorResponse.getHits()).thenReturn(TestHelpers.createSearchHits(totalHits));
 
         GetResponse getDetectorResponse = TestHelpers
-            .createGetResponse(detector, detector.getDetectorId(), AnomalyDetector.ANOMALY_DETECTORS_INDEX);
+            .createGetResponse(detector, detector.getDetectorId(), AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX);
 
         SearchResponse userIndexResponse = mock(SearchResponse.class);
         int userIndexHits = 0;
@@ -431,7 +431,7 @@ public class IndexAnomalyDetectorActionHandlerTests extends AbstractADTest {
                     if (action.equals(SearchAction.INSTANCE)) {
                         assertTrue(request instanceof SearchRequest);
                         SearchRequest searchRequest = (SearchRequest) request;
-                        if (searchRequest.indices()[0].equals(ANOMALY_DETECTORS_INDEX)) {
+                        if (searchRequest.indices()[0].equals(LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX)) {
                             listener.onResponse((Response) detectorResponse);
                         } else {
                             listener.onResponse((Response) userIndexResponse);
@@ -541,7 +541,7 @@ public class IndexAnomalyDetectorActionHandlerTests extends AbstractADTest {
         int totalHits = 10;
         AnomalyDetector existingDetector = TestHelpers.randomAnomalyDetectorUsingCategoryFields(detectorId, null);
         GetResponse getDetectorResponse = TestHelpers
-            .createGetResponse(existingDetector, existingDetector.getDetectorId(), AnomalyDetector.ANOMALY_DETECTORS_INDEX);
+            .createGetResponse(existingDetector, existingDetector.getDetectorId(), AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX);
 
         SearchResponse searchResponse = mock(SearchResponse.class);
         when(searchResponse.getHits()).thenReturn(TestHelpers.createSearchHits(totalHits));
@@ -615,7 +615,7 @@ public class IndexAnomalyDetectorActionHandlerTests extends AbstractADTest {
         int totalHits = 10;
         AnomalyDetector detector = TestHelpers.randomAnomalyDetectorUsingCategoryFields(detectorId, Arrays.asList("a"));
         GetResponse getDetectorResponse = TestHelpers
-            .createGetResponse(detector, detector.getDetectorId(), AnomalyDetector.ANOMALY_DETECTORS_INDEX);
+            .createGetResponse(detector, detector.getDetectorId(), AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX);
 
         SearchResponse searchResponse = mock(SearchResponse.class);
         when(searchResponse.getHits()).thenReturn(TestHelpers.createSearchHits(totalHits));

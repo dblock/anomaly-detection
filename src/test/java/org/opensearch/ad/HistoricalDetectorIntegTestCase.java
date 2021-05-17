@@ -182,7 +182,7 @@ public abstract class HistoricalDetectorIntegTestCase extends ADIntegTestCase {
         SearchRequest searchRequest = new SearchRequest();
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
         sourceBuilder.query(query).sort(EXECUTION_START_TIME_FIELD, SortOrder.DESC).trackTotalHits(true).size(size);
-        searchRequest.source(sourceBuilder).indices(CommonName.DETECTION_STATE_INDEX);
+        searchRequest.source(sourceBuilder).indices(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX);
         SearchResponse searchResponse = client().search(searchRequest).actionGet();
         Iterator<SearchHit> iterator = searchResponse.getHits().iterator();
 
@@ -196,13 +196,13 @@ public abstract class HistoricalDetectorIntegTestCase extends ADIntegTestCase {
     }
 
     public ADTask getADTask(String taskId) throws IOException {
-        ADTask adTask = toADTask(getDoc(CommonName.DETECTION_STATE_INDEX, taskId));
+        ADTask adTask = toADTask(getDoc(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX, taskId));
         adTask.setTaskId(taskId);
         return adTask;
     }
 
     public AnomalyDetectorJob getADJob(String detectorId) throws IOException {
-        return toADJob(getDoc(AnomalyDetectorJob.ANOMALY_DETECTOR_JOB_INDEX, detectorId));
+        return toADJob(getDoc(AnomalyDetectorJob.LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX, detectorId));
     }
 
     public ADTask toADTask(GetResponse doc) throws IOException {

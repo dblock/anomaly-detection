@@ -157,7 +157,7 @@ public class AnomalyResultHandlerTests extends AbstractADTest {
             client,
             settings,
             threadPool,
-            CommonName.ANOMALY_RESULT_INDEX_ALIAS,
+            CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS,
             ThrowingConsumerWrapper.throwingConsumerWrapper(anomalyDetectionIndices::initAnomalyResultIndexDirectly),
             anomalyDetectionIndices::doesAnomalyResultIndexExist,
             clientUtil,
@@ -194,7 +194,7 @@ public class AnomalyResultHandlerTests extends AbstractADTest {
             client,
             settings,
             threadPool,
-            CommonName.ANOMALY_RESULT_INDEX_ALIAS,
+            CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS,
             ThrowingConsumerWrapper.throwingConsumerWrapper(anomalyDetectionIndices::initAnomalyResultIndexDirectly),
             anomalyDetectionIndices::doesAnomalyResultIndexExist,
             clientUtil,
@@ -213,7 +213,7 @@ public class AnomalyResultHandlerTests extends AbstractADTest {
             client,
             settings,
             threadPool,
-            CommonName.ANOMALY_RESULT_INDEX_ALIAS,
+            CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS,
             ThrowingConsumerWrapper.throwingConsumerWrapper(anomalyDetectionIndices::initAnomalyResultIndexDirectly),
             anomalyDetectionIndices::doesAnomalyResultIndexExist,
             clientUtil,
@@ -234,7 +234,7 @@ public class AnomalyResultHandlerTests extends AbstractADTest {
             client,
             settings,
             threadPool,
-            CommonName.ANOMALY_RESULT_INDEX_ALIAS,
+            CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS,
             ThrowingConsumerWrapper.throwingConsumerWrapper(anomalyDetectionIndices::initAnomalyResultIndexDirectly),
             anomalyDetectionIndices::doesAnomalyResultIndexExist,
             clientUtil,
@@ -262,7 +262,7 @@ public class AnomalyResultHandlerTests extends AbstractADTest {
         Settings settings = blocked
             ? Settings.builder().put(IndexMetadata.INDEX_BLOCKS_WRITE_SETTING.getKey(), true).build()
             : Settings.EMPTY;
-        ClusterState blockedClusterState = createIndexBlockedState(indexName, settings, CommonName.ANOMALY_RESULT_INDEX_ALIAS);
+        ClusterState blockedClusterState = createIndexBlockedState(indexName, settings, CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS);
         when(clusterService.state()).thenReturn(blockedClusterState);
         when(indexNameResolver.concreteIndexNames(any(), any(), any(String.class))).thenReturn(new String[] { indexName });
     }
@@ -312,7 +312,7 @@ public class AnomalyResultHandlerTests extends AbstractADTest {
             client,
             backoffSettings,
             threadPool,
-            CommonName.ANOMALY_RESULT_INDEX_ALIAS,
+            CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS,
             ThrowingConsumerWrapper.throwingConsumerWrapper(anomalyDetectionIndices::initAnomalyResultIndexDirectly),
             anomalyDetectionIndices::doesAnomalyResultIndexExist,
             clientUtil,

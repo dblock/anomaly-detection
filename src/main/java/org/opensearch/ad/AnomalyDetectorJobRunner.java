@@ -406,7 +406,7 @@ public class AnomalyDetectorJobRunner implements ScheduledJobRunner {
 
     private void stopAdJob(String detectorId) {
         try {
-            GetRequest getRequest = new GetRequest(AnomalyDetectorJob.ANOMALY_DETECTOR_JOB_INDEX).id(detectorId);
+            GetRequest getRequest = new GetRequest(AnomalyDetectorJob.LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX).id(detectorId);
 
             clientUtil.<GetRequest, GetResponse>asyncRequest(getRequest, client::get, ActionListener.wrap(response -> {
                 if (response.isExists()) {

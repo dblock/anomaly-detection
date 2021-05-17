@@ -247,7 +247,7 @@ public class AnomalyDetectorPlugin extends Plugin implements ActionPlugin, Scrip
             client,
             settings,
             threadPool,
-            CommonName.ANOMALY_RESULT_INDEX_ALIAS,
+            CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS,
             ThrowingConsumerWrapper.throwingConsumerWrapper(anomalyDetectionIndices::initAnomalyResultIndexDirectly),
             anomalyDetectionIndices::doesAnomalyResultIndexExist,
             this.clientUtil,
@@ -340,7 +340,7 @@ public class AnomalyDetectorPlugin extends Plugin implements ActionPlugin, Scrip
         CheckpointDao checkpoint = new CheckpointDao(
             client,
             clientUtil,
-            CommonName.CHECKPOINT_INDEX_NAME,
+            CommonName.LEGACY_OPENDISTRO_CHECKPOINT_INDEX_NAME,
             gson,
             rcfSerde,
             HybridThresholdingModel.class,
@@ -478,23 +478,23 @@ public class AnomalyDetectorPlugin extends Plugin implements ActionPlugin, Scrip
             .put(StatNames.MODEL_INFORMATION.getName(), new ADStat<>(false, new ModelsOnNodeSupplier(modelManager, cacheProvider)))
             .put(
                 StatNames.ANOMALY_DETECTORS_INDEX_STATUS.getName(),
-                new ADStat<>(true, new IndexStatusSupplier(indexUtils, AnomalyDetector.ANOMALY_DETECTORS_INDEX))
+                new ADStat<>(true, new IndexStatusSupplier(indexUtils, AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX))
             )
             .put(
                 StatNames.ANOMALY_RESULTS_INDEX_STATUS.getName(),
-                new ADStat<>(true, new IndexStatusSupplier(indexUtils, CommonName.ANOMALY_RESULT_INDEX_ALIAS))
+                new ADStat<>(true, new IndexStatusSupplier(indexUtils, CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS))
             )
             .put(
                 StatNames.MODELS_CHECKPOINT_INDEX_STATUS.getName(),
-                new ADStat<>(true, new IndexStatusSupplier(indexUtils, CommonName.CHECKPOINT_INDEX_NAME))
+                new ADStat<>(true, new IndexStatusSupplier(indexUtils, CommonName.LEGACY_OPENDISTRO_CHECKPOINT_INDEX_NAME))
             )
             .put(
                 StatNames.ANOMALY_DETECTION_JOB_INDEX_STATUS.getName(),
-                new ADStat<>(true, new IndexStatusSupplier(indexUtils, AnomalyDetectorJob.ANOMALY_DETECTOR_JOB_INDEX))
+                new ADStat<>(true, new IndexStatusSupplier(indexUtils, AnomalyDetectorJob.LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX))
             )
             .put(
                 StatNames.ANOMALY_DETECTION_STATE_STATUS.getName(),
-                new ADStat<>(true, new IndexStatusSupplier(indexUtils, CommonName.DETECTION_STATE_INDEX))
+                new ADStat<>(true, new IndexStatusSupplier(indexUtils, CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX))
             )
             .put(StatNames.DETECTOR_COUNT.getName(), new ADStat<>(true, new SettableSupplier()))
             .put(StatNames.HISTORICAL_SINGLE_ENTITY_DETECTOR_COUNT.getName(), new ADStat<>(true, new SettableSupplier()))
@@ -721,7 +721,7 @@ public class AnomalyDetectorPlugin extends Plugin implements ActionPlugin, Scrip
 
     @Override
     public String getJobIndex() {
-        return AnomalyDetectorJob.ANOMALY_DETECTOR_JOB_INDEX;
+        return AnomalyDetectorJob.LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX;
     }
 
     @Override

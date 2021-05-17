@@ -26,8 +26,8 @@
 
 package org.opensearch.ad.transport;
 
-import static org.opensearch.ad.model.AnomalyDetector.ANOMALY_DETECTORS_INDEX;
-import static org.opensearch.ad.model.AnomalyDetectorJob.ANOMALY_DETECTOR_JOB_INDEX;
+import static org.opensearch.ad.model.AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX;
+import static org.opensearch.ad.model.AnomalyDetectorJob.LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX;
 import static org.opensearch.ad.settings.AnomalyDetectorSettings.FILTER_BY_BACKEND_ROLES;
 import static org.opensearch.ad.util.ParseUtils.getUserContext;
 import static org.opensearch.ad.util.ParseUtils.resolveUserAndExecute;
@@ -241,10 +241,10 @@ public class GetAnomalyDetectorTransportAction extends HandledTransportAction<Ge
         Optional<ADTask> adTask,
         ActionListener<GetAnomalyDetectorResponse> listener
     ) {
-        MultiGetRequest.Item adItem = new MultiGetRequest.Item(ANOMALY_DETECTORS_INDEX, detectorID);
+        MultiGetRequest.Item adItem = new MultiGetRequest.Item(LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX, detectorID);
         MultiGetRequest multiGetRequest = new MultiGetRequest().add(adItem);
         if (returnJob) {
-            MultiGetRequest.Item adJobItem = new MultiGetRequest.Item(ANOMALY_DETECTOR_JOB_INDEX, detectorID);
+            MultiGetRequest.Item adJobItem = new MultiGetRequest.Item(LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX, detectorID);
             multiGetRequest.add(adJobItem);
         }
         client.multiGet(multiGetRequest, onMultiGetResponse(listener, returnJob, returnTask, adTask, detectorID));
@@ -269,7 +269,7 @@ public class GetAnomalyDetectorTransportAction extends HandledTransportAction<Ge
                 long primaryTerm = 0;
 
                 for (MultiGetItemResponse response : responses) {
-                    if (ANOMALY_DETECTORS_INDEX.equals(response.getIndex())) {
+                    if (LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX.equals(response.getIndex())) {
                         if (response.getResponse() == null || !response.getResponse().isExists()) {
                             listener
                                 .onFailure(
@@ -296,7 +296,7 @@ public class GetAnomalyDetectorTransportAction extends HandledTransportAction<Ge
                         }
                     }
 
-                    if (ANOMALY_DETECTOR_JOB_INDEX.equals(response.getIndex())) {
+                    if (LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX.equals(response.getIndex())) {
                         if (response.getResponse() != null
                             && response.getResponse().isExists()
                             && !response.getResponse().isSourceEmpty()) {

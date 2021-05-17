@@ -108,7 +108,7 @@ public class MultiEntityResultHandler extends AnomalyIndexHandler<AnomalyResult>
             client,
             settings,
             threadPool,
-            CommonName.ANOMALY_RESULT_INDEX_ALIAS,
+            CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS,
             ThrowingConsumerWrapper.throwingConsumerWrapper(anomalyDetectionIndices::initAnomalyResultIndexDirectly),
             anomalyDetectionIndices::doesAnomalyResultIndexExist,
             clientUtil,

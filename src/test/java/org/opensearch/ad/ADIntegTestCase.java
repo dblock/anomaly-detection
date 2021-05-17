@@ -100,36 +100,36 @@ public abstract class ADIntegTestCase extends OpenSearchIntegTestCase {
 
     public void createDetectors(List<AnomalyDetector> detectors, boolean createIndexFirst) throws IOException {
         if (createIndexFirst) {
-            createIndex(AnomalyDetector.ANOMALY_DETECTORS_INDEX, AnomalyDetectionIndices.getAnomalyDetectorMappings());
+            createIndex(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX, AnomalyDetectionIndices.getAnomalyDetectorMappings());
         }
 
         for (AnomalyDetector detector : detectors) {
-            indexDoc(AnomalyDetector.ANOMALY_DETECTORS_INDEX, detector.toXContent(jsonBuilder(), XCONTENT_WITH_TYPE));
+            indexDoc(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX, detector.toXContent(jsonBuilder(), XCONTENT_WITH_TYPE));
         }
     }
 
     public String createDetector(AnomalyDetector detector) throws IOException {
-        return indexDoc(AnomalyDetector.ANOMALY_DETECTORS_INDEX, detector.toXContent(jsonBuilder(), XCONTENT_WITH_TYPE));
+        return indexDoc(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX, detector.toXContent(jsonBuilder(), XCONTENT_WITH_TYPE));
     }
 
     public String createADResult(AnomalyResult adResult) throws IOException {
-        return indexDoc(CommonName.ANOMALY_RESULT_INDEX_ALIAS, adResult.toXContent(jsonBuilder(), XCONTENT_WITH_TYPE));
+        return indexDoc(CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS, adResult.toXContent(jsonBuilder(), XCONTENT_WITH_TYPE));
     }
 
     public String createADTask(ADTask adTask) throws IOException {
-        return indexDoc(CommonName.DETECTION_STATE_INDEX, adTask.toXContent(jsonBuilder(), XCONTENT_WITH_TYPE));
+        return indexDoc(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX, adTask.toXContent(jsonBuilder(), XCONTENT_WITH_TYPE));
     }
 
     public void createDetectorIndex() throws IOException {
-        createIndex(AnomalyDetector.ANOMALY_DETECTORS_INDEX, AnomalyDetectionIndices.getAnomalyDetectorMappings());
+        createIndex(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX, AnomalyDetectionIndices.getAnomalyDetectorMappings());
     }
 
     public void createADResultIndex() throws IOException {
-        createIndex(CommonName.ANOMALY_RESULT_INDEX_ALIAS, AnomalyDetectionIndices.getAnomalyResultMappings());
+        createIndex(CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS, AnomalyDetectionIndices.getAnomalyResultMappings());
     }
 
     public void createDetectionStateIndex() throws IOException {
-        createIndex(CommonName.DETECTION_STATE_INDEX, AnomalyDetectionIndices.getDetectionStateMappings());
+        createIndex(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX, AnomalyDetectionIndices.getDetectionStateMappings());
     }
 
     public void createTestDataIndex(String indexName) {
@@ -149,7 +149,7 @@ public abstract class ADIntegTestCase extends OpenSearchIntegTestCase {
     }
 
     public AcknowledgedResponse deleteDetectorIndex() {
-        return deleteIndex(AnomalyDetector.ANOMALY_DETECTORS_INDEX);
+        return deleteIndex(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX);
     }
 
     public AcknowledgedResponse deleteIndex(String indexName) {

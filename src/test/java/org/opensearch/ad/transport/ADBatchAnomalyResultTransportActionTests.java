@@ -138,7 +138,7 @@ public class ADBatchAnomalyResultTransportActionTests extends HistoricalDetector
         ADBatchAnomalyResultRequest request = adBatchAnomalyResultRequest(dateRange);
         client().execute(ADBatchAnomalyResultAction.INSTANCE, request).actionGet(5000);
         Thread.sleep(10000);
-        GetResponse doc = getDoc(CommonName.DETECTION_STATE_INDEX, request.getAdTask().getTaskId());
+        GetResponse doc = getDoc(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX, request.getAdTask().getTaskId());
         assertEquals(ADTaskState.FINISHED.name(), doc.getSourceAsMap().get(ADTask.STATE_FIELD));
     }
 
@@ -197,7 +197,7 @@ public class ADBatchAnomalyResultTransportActionTests extends HistoricalDetector
         );
         client().execute(ADBatchAnomalyResultAction.INSTANCE, request).actionGet(5000);
         Thread.sleep(20000);
-        GetResponse doc = getDoc(CommonName.DETECTION_STATE_INDEX, request.getAdTask().getTaskId());
+        GetResponse doc = getDoc(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX, request.getAdTask().getTaskId());
         assertEquals(ADTaskState.FINISHED.name(), doc.getSourceAsMap().get(ADTask.STATE_FIELD));
         updateTransientSettings(ImmutableMap.of(MAX_BATCH_TASK_PER_NODE.getKey(), 1));
     }
@@ -222,7 +222,7 @@ public class ADBatchAnomalyResultTransportActionTests extends HistoricalDetector
         ADBatchAnomalyResultRequest request = adBatchAnomalyResultRequest(dateRange);
         client().execute(ADBatchAnomalyResultAction.INSTANCE, request).actionGet(5000);
         Thread.sleep(5000);
-        GetResponse doc = getDoc(CommonName.DETECTION_STATE_INDEX, request.getAdTask().getTaskId());
+        GetResponse doc = getDoc(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX, request.getAdTask().getTaskId());
         assertEquals(error, doc.getSourceAsMap().get(ADTask.ERROR_FIELD));
     }
 }

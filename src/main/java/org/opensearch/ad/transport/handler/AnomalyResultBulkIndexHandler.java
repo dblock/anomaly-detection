@@ -26,7 +26,7 @@
 
 package org.opensearch.ad.transport.handler;
 
-import static org.opensearch.ad.constant.CommonName.ANOMALY_RESULT_INDEX_ALIAS;
+import static org.opensearch.ad.constant.CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS;
 import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
 
 import java.util.List;
@@ -70,7 +70,7 @@ public class AnomalyResultBulkIndexHandler extends AnomalyIndexHandler<AnomalyRe
         ClusterService clusterService,
         AnomalyDetectionIndices anomalyDetectionIndices
     ) {
-        super(client, settings, threadPool, ANOMALY_RESULT_INDEX_ALIAS, createIndex, indexExists, clientUtil, indexUtils, clusterService);
+        super(client, settings, threadPool, LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS, createIndex, indexExists, clientUtil, indexUtils, clusterService);
         this.anomalyDetectionIndices = anomalyDetectionIndices;
     }
 
@@ -120,7 +120,7 @@ public class AnomalyResultBulkIndexHandler extends AnomalyIndexHandler<AnomalyRe
         BulkRequestBuilder bulkRequestBuilder = client.prepareBulk();
         anomalyResults.forEach(anomalyResult -> {
             try (XContentBuilder builder = jsonBuilder()) {
-                IndexRequest indexRequest = new IndexRequest(ANOMALY_RESULT_INDEX_ALIAS)
+                IndexRequest indexRequest = new IndexRequest(LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS)
                     .source(anomalyResult.toXContent(builder, RestHandlerUtils.XCONTENT_WITH_TYPE));
                 bulkRequestBuilder.add(indexRequest);
             } catch (Exception e) {

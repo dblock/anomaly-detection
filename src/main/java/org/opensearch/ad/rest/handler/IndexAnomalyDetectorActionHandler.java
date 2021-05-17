@@ -26,7 +26,7 @@
 
 package org.opensearch.ad.rest.handler;
 
-import static org.opensearch.ad.model.AnomalyDetector.ANOMALY_DETECTORS_INDEX;
+import static org.opensearch.ad.model.AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX;
 import static org.opensearch.ad.util.RestHandlerUtils.XCONTENT_WITH_TYPE;
 import static org.opensearch.common.xcontent.XContentParserUtils.ensureExpectedToken;
 
@@ -218,7 +218,7 @@ public class IndexAnomalyDetectorActionHandler {
     }
 
     private void updateAnomalyDetector(String detectorId) {
-        GetRequest request = new GetRequest(ANOMALY_DETECTORS_INDEX, detectorId);
+        GetRequest request = new GetRequest(LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX, detectorId);
         client
             .get(
                 request,
@@ -285,7 +285,7 @@ public class IndexAnomalyDetectorActionHandler {
 
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder().query(query).size(0).timeout(requestTimeout);
 
-        SearchRequest searchRequest = new SearchRequest(ANOMALY_DETECTORS_INDEX).source(searchSourceBuilder);
+        SearchRequest searchRequest = new SearchRequest(LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX).source(searchSourceBuilder);
 
         client
             .search(
@@ -304,7 +304,7 @@ public class IndexAnomalyDetectorActionHandler {
                 QueryBuilder query = QueryBuilders.matchAllQuery();
                 SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder().query(query).size(0).timeout(requestTimeout);
 
-                SearchRequest searchRequest = new SearchRequest(ANOMALY_DETECTORS_INDEX).source(searchSourceBuilder);
+                SearchRequest searchRequest = new SearchRequest(LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX).source(searchSourceBuilder);
 
                 client
                     .search(
@@ -453,7 +453,7 @@ public class IndexAnomalyDetectorActionHandler {
             boolQueryBuilder.mustNot(QueryBuilders.termQuery(RestHandlerUtils._ID, detectorId));
         }
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder().query(boolQueryBuilder).timeout(requestTimeout);
-        SearchRequest searchRequest = new SearchRequest(ANOMALY_DETECTORS_INDEX).source(searchSourceBuilder);
+        SearchRequest searchRequest = new SearchRequest(LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX).source(searchSourceBuilder);
 
         client
             .search(
@@ -503,7 +503,7 @@ public class IndexAnomalyDetectorActionHandler {
             anomalyDetector.getDetectorType(),
             anomalyDetector.getDetectionDateRange()
         );
-        IndexRequest indexRequest = new IndexRequest(ANOMALY_DETECTORS_INDEX)
+        IndexRequest indexRequest = new IndexRequest(LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX)
             .setRefreshPolicy(refreshPolicy)
             .source(detector.toXContent(XContentFactory.jsonBuilder(), XCONTENT_WITH_TYPE))
             .setIfSeqNo(seqNo)
@@ -550,14 +550,14 @@ public class IndexAnomalyDetectorActionHandler {
 
     private void onCreateMappingsResponse(CreateIndexResponse response) throws IOException {
         if (response.isAcknowledged()) {
-            logger.info("Created {} with mappings.", ANOMALY_DETECTORS_INDEX);
+            logger.info("Created {} with mappings.", LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX);
             prepareAnomalyDetectorIndexing();
         } else {
-            logger.warn("Created {} with mappings call not acknowledged.", ANOMALY_DETECTORS_INDEX);
+            logger.warn("Created {} with mappings call not acknowledged.", LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX);
             listener
                 .onFailure(
                     new OpenSearchStatusException(
-                        "Created " + ANOMALY_DETECTORS_INDEX + "with mappings call not acknowledged.",
+                        "Created " + LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX + "with mappings call not acknowledged.",
                         RestStatus.INTERNAL_SERVER_ERROR
                     )
                 );

@@ -500,8 +500,8 @@ public final class ParseUtils {
         ClusterService clusterService,
         NamedXContentRegistry xContentRegistry
     ) {
-        if (clusterService.state().metadata().indices().containsKey(AnomalyDetector.ANOMALY_DETECTORS_INDEX)) {
-            GetRequest request = new GetRequest(AnomalyDetector.ANOMALY_DETECTORS_INDEX).id(detectorId);
+        if (clusterService.state().metadata().indices().containsKey(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX)) {
+            GetRequest request = new GetRequest(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX).id(detectorId);
             client
                 .get(
                     request,
@@ -517,7 +517,7 @@ public final class ParseUtils {
         } else {
             listener
                 .onFailure(
-                    new ResourceNotFoundException("Failed to find anomaly detector index: " + AnomalyDetector.ANOMALY_DETECTORS_INDEX)
+                    new ResourceNotFoundException("Failed to find anomaly detector index: " + AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX)
                 );
         }
     }

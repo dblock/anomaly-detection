@@ -139,11 +139,11 @@ public class StatsAnomalyDetectorTransportAction extends HandledTransportAction<
         ADStatsResponse adStatsResponse = new ADStatsResponse();
         if ((adStatsRequest.getStatsToBeRetrieved().contains(StatNames.DETECTOR_COUNT.getName())
             || adStatsRequest.getStatsToBeRetrieved().contains(StatNames.HISTORICAL_SINGLE_ENTITY_DETECTOR_COUNT.getName()))
-            && clusterService.state().getRoutingTable().hasIndex(AnomalyDetector.ANOMALY_DETECTORS_INDEX)) {
+            && clusterService.state().getRoutingTable().hasIndex(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX)) {
 
             TermsAggregationBuilder termsAgg = AggregationBuilders.terms(DETECTOR_TYPE_AGG).field(AnomalyDetector.DETECTOR_TYPE_FIELD);
             SearchRequest request = new SearchRequest()
-                .indices(AnomalyDetector.ANOMALY_DETECTORS_INDEX)
+                .indices(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX)
                 .source(new SearchSourceBuilder().aggregation(termsAgg).size(0).trackTotalHits(true));
 
             client.search(request, ActionListener.wrap(r -> {

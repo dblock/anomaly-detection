@@ -117,7 +117,7 @@ public class DeleteAnomalyDetectorActionTests extends OpenSearchIntegTestCase {
     @Test
     public void testTransportActionWithAdIndex() {
         // DeleteResponse is not called because detector ID will not exist
-        createIndex(".opendistro-anomaly-detector-jobs");
+        createIndex(".anomaly-detector-jobs");
         DeleteAnomalyDetectorRequest request = new DeleteAnomalyDetectorRequest("1234");
         action.doExecute(mock(Task.class), request, response);
     }

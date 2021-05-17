@@ -125,14 +125,14 @@ public class RolloverTests extends AbstractADTest {
     }
 
     private void assertRolloverRequest(RolloverRequest request) {
-        assertEquals(CommonName.ANOMALY_RESULT_INDEX_ALIAS, request.indices()[0]);
+        assertEquals(CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS, request.indices()[0]);
 
         Map<String, Condition<?>> conditions = request.getConditions();
         assertEquals(1, conditions.size());
         assertEquals(new MaxDocsCondition(defaultMaxDocs), conditions.get(MaxDocsCondition.NAME));
 
         CreateIndexRequest createIndexRequest = request.getCreateIndexRequest();
-        assertEquals(AnomalyDetectionIndices.AD_RESULT_HISTORY_INDEX_PATTERN, createIndexRequest.index());
+        assertEquals(AnomalyDetectionIndices.LEGACY_OPENDISTRO_AD_RESULT_HISTORY_INDEX_PATTERN, createIndexRequest.index());
         assertTrue(createIndexRequest.mappings().get(CommonName.MAPPING_TYPE).contains("data_start_time"));
     }
 
@@ -150,7 +150,7 @@ public class RolloverTests extends AbstractADTest {
 
         Metadata.Builder metaBuilder = Metadata
             .builder()
-            .put(indexMeta(".opendistro-anomaly-results-history-2020.06.24-000003", 1L, CommonName.ANOMALY_RESULT_INDEX_ALIAS), true);
+            .put(indexMeta(".anomaly-results-history-2020.06.24-000003", 1L, CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS), true);
         clusterState = ClusterState.builder(clusterName).metadata(metaBuilder.build()).build();
         when(clusterService.state()).thenReturn(clusterState);
 
@@ -180,12 +180,12 @@ public class RolloverTests extends AbstractADTest {
 
         Metadata.Builder metaBuilder = Metadata
             .builder()
-            .put(indexMeta(".opendistro-anomaly-results-history-2020.06.24-000003", 1L, CommonName.ANOMALY_RESULT_INDEX_ALIAS), true)
+            .put(indexMeta(".anomaly-results-history-2020.06.24-000003", 1L, CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS), true)
             .put(
                 indexMeta(
-                    ".opendistro-anomaly-results-history-2020.06.24-000004",
+                    ".anomaly-results-history-2020.06.24-000004",
                     Instant.now().toEpochMilli(),
-                    CommonName.ANOMALY_RESULT_INDEX_ALIAS
+                    CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS
                 ),
                 true
             );
@@ -219,13 +219,13 @@ public class RolloverTests extends AbstractADTest {
 
         Metadata.Builder metaBuilder = Metadata
             .builder()
-            .put(indexMeta(".opendistro-anomaly-results-history-2020.06.24-000002", 1L, CommonName.ANOMALY_RESULT_INDEX_ALIAS), true)
-            .put(indexMeta(".opendistro-anomaly-results-history-2020.06.24-000003", 2L, CommonName.ANOMALY_RESULT_INDEX_ALIAS), true)
+            .put(indexMeta(".anomaly-results-history-2020.06.24-000002", 1L, CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS), true)
+            .put(indexMeta(".anomaly-results-history-2020.06.24-000003", 2L, CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS), true)
             .put(
                 indexMeta(
-                    ".opendistro-anomaly-results-history-2020.06.24-000004",
+                    ".anomaly-results-history-2020.06.24-000004",
                     Instant.now().toEpochMilli(),
-                    CommonName.ANOMALY_RESULT_INDEX_ALIAS
+                    CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS
                 ),
                 true
             );

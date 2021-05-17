@@ -30,7 +30,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.opensearch.ad.model.AnomalyDetector.ANOMALY_DETECTORS_INDEX;
+import static org.opensearch.ad.model.AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -142,7 +142,7 @@ public class GetAnomalyDetectorTests extends AbstractADTest {
             ActionListener<GetResponse> listener = (ActionListener<GetResponse>) args[1];
 
             String indexName = request.index();
-            if (indexName.equals(ANOMALY_DETECTORS_INDEX)) {
+            if (indexName.equals(LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX)) {
                 listener.onResponse(null);
             }
             return null;

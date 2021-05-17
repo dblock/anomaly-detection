@@ -50,7 +50,7 @@ public class SearchADTasksActionTests extends HistoricalDetectorIntegTestCase {
 
     @Test
     public void testNoIndex() {
-        deleteIndexIfExists(CommonName.DETECTION_STATE_INDEX);
+        deleteIndexIfExists(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX);
         SearchResponse searchResponse = client().execute(SearchADTasksAction.INSTANCE, matchAllRequest()).actionGet(10000);
         assertEquals(0, searchResponse.getInternalResponse().hits().getTotalHits().value);
     }

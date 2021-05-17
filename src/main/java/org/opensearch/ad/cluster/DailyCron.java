@@ -61,7 +61,7 @@ public class DailyCron implements Runnable {
 
     @Override
     public void run() {
-        DeleteByQueryRequest deleteRequest = new DeleteByQueryRequest(CommonName.CHECKPOINT_INDEX_NAME)
+        DeleteByQueryRequest deleteRequest = new DeleteByQueryRequest(CommonName.LEGACY_OPENDISTRO_CHECKPOINT_INDEX_NAME)
             .setQuery(
                 QueryBuilders
                     .boolQuery()

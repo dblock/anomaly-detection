@@ -304,7 +304,7 @@ public class AnomalyDetectorJobRunnerTests extends AbstractADTest {
     }
 
     private void testRunAdJobWithEndRunExceptionNowAndStopAdJob(boolean jobExists, boolean jobEnabled, boolean disableSuccessfully) {
-        LockModel lock = new LockModel(AnomalyDetectorJob.ANOMALY_DETECTOR_JOB_INDEX, jobParameter.getName(), Instant.now(), 10, false);
+        LockModel lock = new LockModel(AnomalyDetectorJob.LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX, jobParameter.getName(), Instant.now(), 10, false);
         Exception exception = new EndRunException(jobParameter.getName(), randomAlphaOfLength(5), true);
 
         doAnswer(invocation -> {
@@ -386,7 +386,7 @@ public class AnomalyDetectorJobRunnerTests extends AbstractADTest {
 
     @Test
     public void testRunAdJobWithEndRunExceptionNotNowAndRetryUntilStop() throws InterruptedException {
-        LockModel lock = new LockModel(AnomalyDetectorJob.ANOMALY_DETECTOR_JOB_INDEX, jobParameter.getName(), Instant.now(), 10, false);
+        LockModel lock = new LockModel(AnomalyDetectorJob.LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX, jobParameter.getName(), Instant.now(), 10, false);
         Instant executionStartTime = Instant.now();
         Schedule schedule = mock(IntervalSchedule.class);
         when(jobParameter.getSchedule()).thenReturn(schedule);

@@ -175,7 +175,7 @@ public class PreviewAnomalyDetectorTransportAction extends
         Instant endTime
     ) {
         if (!StringUtils.isBlank(detectorId)) {
-            GetRequest getRequest = new GetRequest(AnomalyDetector.ANOMALY_DETECTORS_INDEX).id(detectorId);
+            GetRequest getRequest = new GetRequest(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX).id(detectorId);
             client.get(getRequest, onGetAnomalyDetectorResponse(listener, startTime, endTime));
         } else {
             listener.onFailure(new OpenSearchException("Wrong input, no detector id", RestStatus.BAD_REQUEST));

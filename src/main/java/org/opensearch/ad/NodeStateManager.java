@@ -147,7 +147,7 @@ public class NodeStateManager implements MaintenanceState, CleanState {
         if (state != null && state.getDetectorDef() != null) {
             listener.onResponse(Optional.of(state.getDetectorDef()));
         } else {
-            GetRequest request = new GetRequest(AnomalyDetector.ANOMALY_DETECTORS_INDEX, adID);
+            GetRequest request = new GetRequest(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX, adID);
             clientUtil.<GetRequest, GetResponse>asyncRequest(request, client::get, onGetDetectorResponse(adID, listener));
         }
     }
@@ -199,7 +199,7 @@ public class NodeStateManager implements MaintenanceState, CleanState {
             return;
         }
 
-        GetRequest request = new GetRequest(CommonName.CHECKPOINT_INDEX_NAME, modelPartitioner.getRcfModelId(adID, 0));
+        GetRequest request = new GetRequest(CommonName.LEGACY_OPENDISTRO_CHECKPOINT_INDEX_NAME, modelPartitioner.getRcfModelId(adID, 0));
 
         clientUtil.<GetRequest, GetResponse>asyncRequest(request, client::get, onGetCheckpointResponse(adID, listener));
     }

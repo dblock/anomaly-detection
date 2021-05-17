@@ -26,8 +26,8 @@
 
 package org.opensearch.ad;
 
-import static org.opensearch.ad.model.AnomalyDetector.ANOMALY_DETECTORS_INDEX;
-import static org.opensearch.ad.model.AnomalyDetectorJob.ANOMALY_DETECTOR_JOB_INDEX;
+import static org.opensearch.ad.model.AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX;
+import static org.opensearch.ad.model.AnomalyDetectorJob.LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX;
 import static org.opensearch.common.xcontent.XContentParserUtils.ensureExpectedToken;
 
 import java.io.IOException;
@@ -125,7 +125,7 @@ public class AnomalyDetectorProfileRunner extends AbstractProfileRunner {
         Set<DetectorProfileName> profilesToCollect,
         ActionListener<DetectorProfile> listener
     ) {
-        GetRequest getDetectorRequest = new GetRequest(ANOMALY_DETECTORS_INDEX, detectorId);
+        GetRequest getDetectorRequest = new GetRequest(LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX, detectorId);
         client.get(getDetectorRequest, ActionListener.wrap(getDetectorResponse -> {
             if (getDetectorResponse != null && getDetectorResponse.isExists()) {
                 try (
@@ -155,7 +155,7 @@ public class AnomalyDetectorProfileRunner extends AbstractProfileRunner {
         Set<DetectorProfileName> profilesToCollect
     ) {
         String detectorId = detector.getDetectorId();
-        GetRequest getRequest = new GetRequest(ANOMALY_DETECTOR_JOB_INDEX, detectorId);
+        GetRequest getRequest = new GetRequest(LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX, detectorId);
         client.get(getRequest, ActionListener.wrap(getResponse -> {
             if (getResponse != null && getResponse.isExists()) {
                 try (
@@ -595,7 +595,7 @@ public class AnomalyDetectorProfileRunner extends AbstractProfileRunner {
 
         SearchSourceBuilder source = new SearchSourceBuilder().query(filterQuery).size(1);
 
-        SearchRequest request = new SearchRequest(CommonName.ANOMALY_RESULT_INDEX_ALIAS);
+        SearchRequest request = new SearchRequest(CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS);
         request.source(source);
         return request;
     }

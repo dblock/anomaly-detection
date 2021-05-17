@@ -339,7 +339,7 @@ public class AnomalyDetectorRestApiIT extends AnomalyDetectorRestTestCase {
             detector.getUser()
         );
 
-        deleteIndexWithAdminClient(AnomalyDetector.ANOMALY_DETECTORS_INDEX);
+        deleteIndexWithAdminClient(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX);
 
         TestHelpers
             .assertFailWith(

@@ -96,7 +96,7 @@ public class SearchADTasksTransportActionTests extends HistoricalDetectorIntegTe
         BoolQueryBuilder query = new BoolQueryBuilder();
         query.filter(new TermQueryBuilder(ADTask.IS_LATEST_FIELD, isLatest));
         sourceBuilder.query(query);
-        SearchRequest request = new SearchRequest().source(sourceBuilder).indices(CommonName.DETECTION_STATE_INDEX);
+        SearchRequest request = new SearchRequest().source(sourceBuilder).indices(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX);
         return request;
     }
 

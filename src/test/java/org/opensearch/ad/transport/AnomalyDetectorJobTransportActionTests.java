@@ -202,7 +202,7 @@ public class AnomalyDetectorJobTransportActionTests extends HistoricalDetectorIn
             ADTask task = randomADTask(randomAlphaOfLength(5), detector, detectorId, state);
             createADTask(task);
         }
-        long count = countDocs(CommonName.DETECTION_STATE_INDEX);
+        long count = countDocs(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX);
         assertEquals(states.size(), count);
 
         AnomalyDetectorJobRequest request = new AnomalyDetectorJobRequest(detectorId, randomLong(), randomLong(), START_JOB);
@@ -215,7 +215,7 @@ public class AnomalyDetectorJobTransportActionTests extends HistoricalDetectorIn
         }, e -> { latch.countDown(); }));
         latch.await();
         Thread.sleep(10000);
-        count = countDocs(CommonName.DETECTION_STATE_INDEX);
+        count = countDocs(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX);
         // we have one latest task, so total count should add 1
         assertEquals(maxOldAdTaskDocsPerDetector + 1, count);
     }
@@ -225,13 +225,13 @@ public class AnomalyDetectorJobTransportActionTests extends HistoricalDetectorIn
     public void tearDown() throws Exception {
         super.tearDown();
         // delete index will clear search context, this can avoid in-flight contexts error
-        deleteIndexIfExists(AnomalyDetector.ANOMALY_DETECTORS_INDEX);
-        deleteIndexIfExists(CommonName.DETECTION_STATE_INDEX);
+        deleteIndexIfExists(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX);
+        deleteIndexIfExists(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX);
     }
 
     public void testStartRealtimeDetector() throws IOException {
         String detectorId = startRealtimeDetector();
-        GetResponse doc = getDoc(AnomalyDetectorJob.ANOMALY_DETECTOR_JOB_INDEX, detectorId);
+        GetResponse doc = getDoc(AnomalyDetectorJob.LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX, detectorId);
         AnomalyDetectorJob job = toADJob(doc);
         assertTrue(job.isEnabled());
         assertEquals(detectorId, job.getName());
@@ -304,7 +304,7 @@ public class AnomalyDetectorJobTransportActionTests extends HistoricalDetectorIn
         String detectorId = startRealtimeDetector();
         AnomalyDetectorJobRequest request = stopDetectorJobRequest(detectorId);
         client().execute(AnomalyDetectorJobAction.INSTANCE, request).actionGet(10000);
-        GetResponse doc = getDoc(AnomalyDetectorJob.ANOMALY_DETECTOR_JOB_INDEX, detectorId);
+        GetResponse doc = getDoc(AnomalyDetectorJob.LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX, detectorId);
         AnomalyDetectorJob job = toADJob(doc);
         assertFalse(job.isEnabled());
         assertEquals(detectorId, job.getName());

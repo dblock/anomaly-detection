@@ -441,14 +441,14 @@ public class CheckpointDaoTests {
     private BulkResponse createBulkResponse(int succeeded, int failed, String[] failedId) {
         BulkItemResponse[] bulkItemResponses = new BulkItemResponse[succeeded + failed];
 
-        ShardId shardId = new ShardId(CommonName.CHECKPOINT_INDEX_NAME, "", 1);
+        ShardId shardId = new ShardId(CommonName.LEGACY_OPENDISTRO_CHECKPOINT_INDEX_NAME, "", 1);
         int i = 0;
         for (; i < failed; i++) {
             bulkItemResponses[i] = new BulkItemResponse(
                 i,
                 DocWriteRequest.OpType.UPDATE,
                 new BulkItemResponse.Failure(
-                    CommonName.CHECKPOINT_INDEX_NAME,
+                    CommonName.LEGACY_OPENDISTRO_CHECKPOINT_INDEX_NAME,
                     CommonName.MAPPING_TYPE,
                     failedId[i],
                     new VersionConflictEngineException(shardId, "id", "test")

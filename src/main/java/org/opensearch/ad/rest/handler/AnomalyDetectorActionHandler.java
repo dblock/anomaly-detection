@@ -26,7 +26,7 @@
 
 package org.opensearch.ad.rest.handler;
 
-import static org.opensearch.ad.model.AnomalyDetectorJob.ANOMALY_DETECTOR_JOB_INDEX;
+import static org.opensearch.ad.model.AnomalyDetectorJob.LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX;
 import static org.opensearch.common.xcontent.XContentParserUtils.ensureExpectedToken;
 
 import java.io.IOException;
@@ -71,8 +71,8 @@ public class AnomalyDetectorActionHandler {
         AnomalyDetectorFunction function,
         NamedXContentRegistry xContentRegistry
     ) {
-        if (clusterService.state().metadata().indices().containsKey(ANOMALY_DETECTOR_JOB_INDEX)) {
-            GetRequest request = new GetRequest(ANOMALY_DETECTOR_JOB_INDEX).id(detectorId);
+        if (clusterService.state().metadata().indices().containsKey(LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX)) {
+            GetRequest request = new GetRequest(LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX).id(detectorId);
             client
                 .get(
                     request,

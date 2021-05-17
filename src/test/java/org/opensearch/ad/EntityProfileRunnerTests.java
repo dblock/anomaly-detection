@@ -30,8 +30,8 @@ import static java.util.Collections.emptyMap;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
-import static org.opensearch.ad.model.AnomalyDetector.ANOMALY_DETECTORS_INDEX;
-import static org.opensearch.ad.model.AnomalyDetectorJob.ANOMALY_DETECTOR_JOB_INDEX;
+import static org.opensearch.ad.model.AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX;
+import static org.opensearch.ad.model.AnomalyDetectorJob.LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX;
 
 import java.io.IOException;
 import java.time.temporal.ChronoUnit;
@@ -131,10 +131,10 @@ public class EntityProfileRunnerTests extends AbstractADTest {
             ActionListener<GetResponse> listener = (ActionListener<GetResponse>) args[1];
 
             String indexName = request.index();
-            if (indexName.equals(ANOMALY_DETECTORS_INDEX)) {
+            if (indexName.equals(LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX)) {
                 listener
                     .onResponse(TestHelpers.createGetResponse(detector, detector.getDetectorId(), AnomalyDetector.ANOMALY_DETECTORS_INDEX));
-            } else if (indexName.equals(ANOMALY_DETECTOR_JOB_INDEX)) {
+            } else if (indexName.equals(LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX)) {
                 listener
                     .onResponse(
                         TestHelpers.createGetResponse(job, detector.getDetectorId(), AnomalyDetectorJob.ANOMALY_DETECTOR_JOB_INDEX)
@@ -218,7 +218,7 @@ public class EntityProfileRunnerTests extends AbstractADTest {
             ActionListener<GetResponse> listener = (ActionListener<GetResponse>) args[1];
 
             String indexName = request.index();
-            if (indexName.equals(ANOMALY_DETECTORS_INDEX)) {
+            if (indexName.equals(LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX)) {
                 listener
                     .onResponse(TestHelpers.createGetResponse(detector, detector.getDetectorId(), AnomalyDetector.ANOMALY_DETECTORS_INDEX));
             }
@@ -340,11 +340,11 @@ public class EntityProfileRunnerTests extends AbstractADTest {
             ActionListener<GetResponse> listener = (ActionListener<GetResponse>) args[1];
 
             String indexName = request.index();
-            if (indexName.equals(ANOMALY_DETECTORS_INDEX)) {
+            if (indexName.equals(LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX)) {
                 listener
                     .onResponse(TestHelpers.createGetResponse(detector, detector.getDetectorId(), AnomalyDetector.ANOMALY_DETECTORS_INDEX));
-            } else if (indexName.equals(ANOMALY_DETECTOR_JOB_INDEX)) {
-                listener.onFailure(new IndexNotFoundException(ANOMALY_DETECTOR_JOB_INDEX));
+            } else if (indexName.equals(LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX)) {
+                listener.onFailure(new IndexNotFoundException(LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX));
             }
 
             return null;

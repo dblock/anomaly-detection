@@ -26,7 +26,7 @@
 
 package org.opensearch.ad.transport;
 
-import static org.opensearch.ad.model.AnomalyDetectorJob.ANOMALY_DETECTOR_JOB_INDEX;
+import static org.opensearch.ad.model.AnomalyDetectorJob.LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX;
 import static org.opensearch.ad.settings.AnomalyDetectorSettings.FILTER_BY_BACKEND_ROLES;
 import static org.opensearch.ad.util.ParseUtils.getUserContext;
 import static org.opensearch.ad.util.ParseUtils.resolveUserAndExecute;
@@ -136,7 +136,7 @@ public class DeleteAnomalyDetectorTransportAction extends HandledTransportAction
 
     private void deleteAnomalyDetectorJobDoc(String detectorId, ActionListener<DeleteResponse> listener) {
         LOG.info("Delete anomaly detector job {}", detectorId);
-        DeleteRequest deleteRequest = new DeleteRequest(AnomalyDetectorJob.ANOMALY_DETECTOR_JOB_INDEX, detectorId)
+        DeleteRequest deleteRequest = new DeleteRequest(AnomalyDetectorJob.LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX, detectorId)
             .setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
         client.delete(deleteRequest, ActionListener.wrap(response -> {
             if (response.getResult() == DocWriteResponse.Result.DELETED || response.getResult() == DocWriteResponse.Result.NOT_FOUND) {
@@ -158,7 +158,7 @@ public class DeleteAnomalyDetectorTransportAction extends HandledTransportAction
 
     private void deleteDetectorStateDoc(String detectorId, ActionListener<DeleteResponse> listener) {
         LOG.info("Delete detector info {}", detectorId);
-        DeleteRequest deleteRequest = new DeleteRequest(CommonName.DETECTION_STATE_INDEX, detectorId);
+        DeleteRequest deleteRequest = new DeleteRequest(CommonName.LEGACY_OPENDISTRO_DETECTION_STATE_INDEX, detectorId);
         client
             .delete(
                 deleteRequest,
@@ -182,7 +182,7 @@ public class DeleteAnomalyDetectorTransportAction extends HandledTransportAction
 
     private void deleteAnomalyDetectorDoc(String detectorId, ActionListener<DeleteResponse> listener) {
         LOG.info("Delete anomaly detector {}", detectorId);
-        DeleteRequest deleteRequest = new DeleteRequest(AnomalyDetector.ANOMALY_DETECTORS_INDEX, detectorId)
+        DeleteRequest deleteRequest = new DeleteRequest(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX, detectorId)
             .setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
         client.delete(deleteRequest, new ActionListener<DeleteResponse>() {
             @Override
@@ -198,8 +198,8 @@ public class DeleteAnomalyDetectorTransportAction extends HandledTransportAction
     }
 
     private void getDetectorJob(String detectorId, ActionListener<DeleteResponse> listener, AnomalyDetectorFunction function) {
-        if (clusterService.state().metadata().indices().containsKey(ANOMALY_DETECTOR_JOB_INDEX)) {
-            GetRequest request = new GetRequest(ANOMALY_DETECTOR_JOB_INDEX).id(detectorId);
+        if (clusterService.state().metadata().indices().containsKey(LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX)) {
+            GetRequest request = new GetRequest(LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX).id(detectorId);
             client.get(request, ActionListener.wrap(response -> onGetAdJobResponseForWrite(response, listener, function), exception -> {
                 LOG.error("Fail to get anomaly detector job: " + detectorId, exception);
                 listener.onFailure(exception);

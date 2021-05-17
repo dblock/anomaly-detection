@@ -77,7 +77,7 @@ public class SearchAnomalyDetectorActionTests extends HistoricalDetectorIntegTes
     }
 
     public void testNoIndex() {
-        deleteIndexIfExists(AnomalyDetector.ANOMALY_DETECTORS_INDEX);
+        deleteIndexIfExists(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX);
 
         BoolQueryBuilder query = new BoolQueryBuilder().filter(new MatchAllQueryBuilder());
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder().query(query);

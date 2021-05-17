@@ -31,8 +31,8 @@ import static java.util.Collections.emptySet;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
-import static org.opensearch.ad.model.AnomalyDetector.ANOMALY_DETECTORS_INDEX;
-import static org.opensearch.ad.model.AnomalyDetectorJob.ANOMALY_DETECTOR_JOB_INDEX;
+import static org.opensearch.ad.model.AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX;
+import static org.opensearch.ad.model.AnomalyDetectorJob.LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -110,7 +110,7 @@ public class AnomalyDetectorProfileRunnerTests extends AbstractProfileRunnerTest
             GetRequest request = (GetRequest) args[0];
             ActionListener<GetResponse> listener = (ActionListener<GetResponse>) args[1];
 
-            if (request.index().equals(ANOMALY_DETECTORS_INDEX)) {
+            if (request.index().equals(LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX)) {
                 switch (detectorStatus) {
                     case EXIST:
                         listener
@@ -119,7 +119,7 @@ public class AnomalyDetectorProfileRunnerTests extends AbstractProfileRunnerTest
                             );
                         break;
                     case INDEX_NOT_EXIST:
-                        listener.onFailure(new IndexNotFoundException(ANOMALY_DETECTORS_INDEX));
+                        listener.onFailure(new IndexNotFoundException(LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX));
                         break;
                     case NO_DOC:
                         when(detectorGetReponse.isExists()).thenReturn(false);
@@ -129,11 +129,11 @@ public class AnomalyDetectorProfileRunnerTests extends AbstractProfileRunnerTest
                         assertTrue("should not reach here", false);
                         break;
                 }
-            } else if (request.index().equals(ANOMALY_DETECTOR_JOB_INDEX)) {
+            } else if (request.index().equals(LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX)) {
                 AnomalyDetectorJob job = null;
                 switch (jobStatus) {
                     case INDEX_NOT_EXIT:
-                        listener.onFailure(new IndexNotFoundException(ANOMALY_DETECTOR_JOB_INDEX));
+                        listener.onFailure(new IndexNotFoundException(LEGACY_OPENDISTRO_ANOMALY_DETECTOR_JOB_INDEX));
                         break;
                     case DISABLED:
                         job = TestHelpers.randomAnomalyDetectorJob(false);

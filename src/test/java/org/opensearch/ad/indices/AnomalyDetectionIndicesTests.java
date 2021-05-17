@@ -85,7 +85,7 @@ public class AnomalyDetectionIndicesTests extends OpenSearchIntegTestCase {
             boolean acknowledged = response.isAcknowledged();
             assertTrue(acknowledged);
         }, failure -> { throw new RuntimeException("should not recreate index"); }));
-        TestHelpers.waitForIndexCreationToComplete(client(), AnomalyDetector.ANOMALY_DETECTORS_INDEX);
+        TestHelpers.waitForIndexCreationToComplete(client(), AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX);
     }
 
     public void testAnomalyDetectorIndexExistsAndNotRecreate() throws IOException {
@@ -97,8 +97,8 @@ public class AnomalyDetectionIndicesTests extends OpenSearchIntegTestCase {
                         failure -> { throw new RuntimeException("should not recreate index"); }
                     )
             );
-        TestHelpers.waitForIndexCreationToComplete(client(), AnomalyDetector.ANOMALY_DETECTORS_INDEX);
-        if (client().admin().indices().prepareExists(AnomalyDetector.ANOMALY_DETECTORS_INDEX).get().isExists()) {
+        TestHelpers.waitForIndexCreationToComplete(client(), AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX);
+        if (client().admin().indices().prepareExists(AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX).get().isExists()) {
             indices
                 .initAnomalyDetectorIndexIfAbsent(
                     TestHelpers
@@ -107,7 +107,7 @@ public class AnomalyDetectionIndicesTests extends OpenSearchIntegTestCase {
                                 throw new RuntimeException("should not recreate index " + AnomalyDetector.ANOMALY_DETECTORS_INDEX);
                             },
                             failure -> {
-                                throw new RuntimeException("should not recreate index " + AnomalyDetector.ANOMALY_DETECTORS_INDEX);
+                                throw new RuntimeException("should not recreate index " + AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX);
                             }
                         )
                 );
@@ -124,7 +124,7 @@ public class AnomalyDetectionIndicesTests extends OpenSearchIntegTestCase {
             boolean acknowledged = response.isAcknowledged();
             assertTrue(acknowledged);
         }, failure -> { throw new RuntimeException("should not recreate index"); }));
-        TestHelpers.waitForIndexCreationToComplete(client(), CommonName.ANOMALY_RESULT_INDEX_ALIAS);
+        TestHelpers.waitForIndexCreationToComplete(client(), CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS);
     }
 
     public void testAnomalyResultIndexExistsAndNotRecreate() throws IOException {
@@ -136,8 +136,8 @@ public class AnomalyDetectionIndicesTests extends OpenSearchIntegTestCase {
                         failure -> { throw new RuntimeException("should not recreate index"); }
                     )
             );
-        TestHelpers.waitForIndexCreationToComplete(client(), CommonName.ANOMALY_RESULT_INDEX_ALIAS);
-        if (client().admin().indices().prepareExists(CommonName.ANOMALY_RESULT_INDEX_ALIAS).get().isExists()) {
+        TestHelpers.waitForIndexCreationToComplete(client(), CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS);
+        if (client().admin().indices().prepareExists(CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS).get().isExists()) {
             indices
                 .initAnomalyResultIndexIfAbsent(
                     TestHelpers
@@ -146,7 +146,7 @@ public class AnomalyDetectionIndicesTests extends OpenSearchIntegTestCase {
                                 throw new RuntimeException("should not recreate index " + CommonName.ANOMALY_RESULT_INDEX_ALIAS);
                             },
                             failure -> {
-                                throw new RuntimeException("should not recreate index " + CommonName.ANOMALY_RESULT_INDEX_ALIAS, failure);
+                                throw new RuntimeException("should not recreate index " + CommonName.LEGACY_OPENDISTRO_ANOMALY_RESULT_INDEX_ALIAS, failure);
                             }
                         )
                 );

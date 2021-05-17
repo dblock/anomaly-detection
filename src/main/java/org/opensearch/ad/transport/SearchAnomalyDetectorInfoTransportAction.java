@@ -26,7 +26,7 @@
 
 package org.opensearch.ad.transport;
 
-import static org.opensearch.ad.model.AnomalyDetector.ANOMALY_DETECTORS_INDEX;
+import static org.opensearch.ad.model.AnomalyDetector.LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -74,7 +74,7 @@ public class SearchAnomalyDetectorInfoTransportAction extends
         String name = request.getName();
         String rawPath = request.getRawPath();
         try (ThreadContext.StoredContext context = client.threadPool().getThreadContext().stashContext()) {
-            SearchRequest searchRequest = new SearchRequest().indices(ANOMALY_DETECTORS_INDEX);
+            SearchRequest searchRequest = new SearchRequest().indices(LEGACY_OPENDISTRO_ANOMALY_DETECTORS_INDEX);
             if (rawPath.endsWith(RestHandlerUtils.COUNT)) {
                 // Count detectors
                 SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
